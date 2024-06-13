@@ -59,7 +59,12 @@ $(function () {
   $window.on('mousemove', (e) => {
     //clientX, pageX, ScreenX 중 하나를 골라서 쓰기도함
     // 화면 크기의 절반을 빼줌
-    x = e.pageX - $window.innerWidth() / 2;
+    // Math.min(a, b) Math.max(a, b) -> 각각의 최대값과 최소값을 제한함
+    //max -> a, b중 큰 값
+    //min -> a, b 중 작은 값
+    x = Math.max(-100, Math.min(200, e.pageX - $window.innerWidth() / 2));
+    y = Math.max(-10, Math.min(100, e.pageY - $window.innerHeight() / 2));
+    // ->-100보다 작을 수 없고 200보다 클수 없음
     // y = e.pageY - $window.innerHeight() / 2;
   });
   // 대상(이소룡)을 움직이게 하는 함수
@@ -71,16 +76,18 @@ $(function () {
 
     $('.bruce-lee').css({
       // transform: `translate(${mx}px, ${my}px)`,
-      transform: `translateX(${mx * 0.08}px)`,
+      transform: `translate(${mx * 0.6}px, ${my * 0.4}px)`,
+      filter: ` blur(${-mx * 0.04}px)`,
     });
 
     $('.bruce-lee-bg').css({
       // transform: `translate(${mx}px, ${my}px)`,
-      transform: `translateX(${mx * 0.05}px)`,
+      transform: `translate(${mx * 0.6}px, ${my * 0.7}px)`,
+      filter: ` blur(${mx * 0.04}px)`,
     });
     $('.title').css({
       // transform: `translate(${mx}px, ${my}px)`,
-      transform: `translate(${-mx * 0.03}px, -50%)`,
+      transform: `translate(${-mx * 0.3}px, -50%)`,
     });
 
     requestAnimationFrame(moving);
