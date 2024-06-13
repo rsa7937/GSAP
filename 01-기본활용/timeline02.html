@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>stagger</title>
+  <style>
+    .wrap {
+      width: 50%;
+      margin: 0 auto;
+      border: 1px solid #000;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+    }
+
+    .red {
+      background: red;
+    }
+
+    .yellow {
+      background: yellow;
+    }
+
+    .blue {
+      background: blue;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="box red"></div>
+    <div class="box yellow"></div>
+    <div class="box blue"></div>
+  </div>
+
+  <script>
+    //타임라인을 생성 --> 여러요소를 움직이게 할 것
+    //const tl = gsap.timeline();
+
+    // tl.from('.red', { autoAlpha: 0, y: -50, rotation: 20, duration: 1, })
+    // tl.from('.yellow', { autoAlpha: 0, y: -50, rotation: 20, duration: 1, }, '-=0.5')
+    // tl.from('.blue', { autoAlpha: 0, y: -50, rotation: 20, duration: 1, }, '-=0.5')
+
+    // querySelector로 공통된 클래스를 가진 친구들을 불러오면 가장 먼저 써진 친구만 불러옴
+    const box = document.querySelectorAll('.box');
+    console.log(box);
+
+
+    // timeline을 쓴 것과 같은 효과의 stagger
+    // 같은 대상의 순차적인 움직임 -> box에 둘러싸인 red, yellow, blue 각각
+    gsap.from(box, {
+      autoAlpha: 0, y: -50, rotation: 20, duration: 1,
+      repeat: -1,
+      //stagger: 0.5,
+      stagger: {
+        each: 0.5,
+        from: 'random'
+      }
+    })
+
+    // https://gsap.com/resources/getting-started/Staggers
+  </script>
+</body>
+
+</html>

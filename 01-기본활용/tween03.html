@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tween03- control</title>
+
+  <style>
+    .wrap {
+      width: 70%;
+      height: 400px;
+      margin: 0 auto;
+      border: 1px solid #000;
+      position: relative;
+    }
+
+    .box {
+      width: 150px;
+      height: 150px;
+      background: skyblue;
+    }
+
+    .btns {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .btns button {
+      padding: 10px;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      // 변수에 애니메이션 담아두기
+      const tween = gsap.to('.box', { x: 900, rotation: 360, duration: 5, ease: "none", paused: true, })
+
+      //https://gsap.com/docs/v3/GSAP/Tween
+      document.querySelector('#play').addEventListener('click', () => {
+        tween.play();
+      })
+      document.querySelector('#pause').addEventListener('click', () => {
+        tween.pause();
+      })
+      document.querySelector('#reverse').addEventListener('click', () => {
+        tween.reverse();
+      })
+
+      // 처음 출발지점으로 이동해서 시작
+      document.querySelector('#restart').addEventListener('click', () => {
+        tween.restart();
+      })
+
+      // 타임라인의 1초 지점으로 이동
+      // 초마다 각 Phase가 정해져있음.
+      // 10초의 duration을 가지면 1-10의 사이의 값을 입력하면 됨
+      // skip 버튼과 같이 애니메이션 건너뛰기하는 액션에 활용됨
+      document.querySelector('#seek').addEventListener('click', () => {
+        tween.seek(1);
+      })
+
+      // 전체 진행률에 대한 접근 0-1 사이의 값으로 나타냄
+      document.querySelector('#progress').addEventListener('click', () => {
+        tween.progress(1);
+      })
+
+      //재생 속도 조절
+      document.querySelector('#timescale').addEventListener('click', () => {
+        tween.timeScale(2);
+      })
+
+      // 애니메이션 죽이기, 즉시 종료 : play, restart 불가
+      document.querySelector('#kill').addEventListener('click', () => {
+        tween.kill();
+      })
+    })
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="box"></div>
+    <div class="btns">
+      <button id="play">play</button>
+      <button id="pause">pause</button>
+      <button id="reverse">reverse</button>
+      <button id="restart">restart</button>
+      <button id="seek">seek</button>
+      <button id="progress">progress</button>
+      <button id="timescale">timescale</button>
+      <button id="kill">kill</button>
+    </div>
+  </div>
+</body>
+
+</html>

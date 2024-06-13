@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>timeline 기본</title>
+  <style>
+    .wrap {
+      width: 70%;
+      margin: 50px auto;
+      border: 1px solid #000;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      margin-top: 30px;
+    }
+
+    .red {
+      background: red;
+    }
+
+    .yellow {
+      background: yellow;
+    }
+
+    .blue {
+      background: blue;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="box red"></div>
+    <div class="box yellow"></div>
+    <div class="box blue"></div>
+  </div>
+  <script>
+    // gsap.to('.red', { x: 800, duration: 2, })
+    // gsap.to('.yellow', { x: 800, duration: 3, delay: 2 })
+    // gsap.to('.blue', { x: 800, duration: 1, delay: 5   })
+
+    //여러 요소의 순차적인 애니메이션 제작을 위해, 타임라인을 설정!
+    const tl = gsap.timeline();
+
+    // delay에 대한 계산이 띠로 필요 없음 
+    //-> delay를 추가로 넣으면 그 시간만큼 delay되어서 나란히 애니메이션이 실행됨
+    // tl.to('.red', { x: 800, duration: 2, });
+    // tl.to('.yellow', { x: 800, duration: 3, delay: 2 })
+    // tl.to('.blue', { x: 800, duration: 1, })
+
+    //position parameter
+    //원래 애니메이션이 시작되는 지점보다 1초 먼저 시작함
+    // 소수점으로 표현도 가능
+    // tl.to('.yellow', { x: 800, duration: 3, }, '-=2')
+
+    // 바로 앞에 오는 친구와 같은 타임라인에서 애니메이션이 시작되도록 함  -> '<'
+    // tl.to('.red', { x: 800, duration: 2, });
+    // tl.to('.yellow', { x: 800, duration: 2, }, '-=2')
+    // tl.to('.blue', { x: 800, duration: 2, }, '<')
+
+    tl.to('.red', { x: 800, duration: 2, ease: 'none' });
+    tl.to('.yellow', { x: 800, duration: 3, ease: 'none' }, '-=0.4')
+    tl.to('.blue', { x: 800, duration: 1, ease: 'none' }, '<')
+  </script>
+</body>
+
+</html>

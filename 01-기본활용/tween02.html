@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tween 기본</title>
+  <style>
+    .wrap {
+      width: 70%;
+      margin: 50px auto;
+      border: 1px solid #000;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      margin-top: 30px;
+    }
+
+    .red {
+      background: red;
+      /* 눈에 보이지만 않는, 점유공간은 존재함 */
+      visibility: hidden;
+    }
+
+    .yellow {
+      background: yellow;
+    }
+
+    .blue {
+      background: blue;
+      visibility: hidden;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="box red"></div>
+    <div class="box yellow"></div>
+    <div class="box blue"></div>
+
+    <button id="btnGo">Go!</button>
+  </div>
+  <script>
+    //https://gsap.com/resources/get-started
+    // 대상을 변수에 저장
+
+    const redBox = document.querySelector('.red');
+    const blueBox = document.querySelector('.blue');
+    const yellowBox = document.querySelector('.yellow');
+
+    const btnGo = document.querySelector('#btnGo');
+
+    gsap.from(redBox, {
+      y: -100,
+      rotation: 90,
+      duration: 1,
+      autoAlpha: 0, //opacity 대신 쓰는것이 가능, 마치 toggle처럼 적용, autoAlpha와 visibility는 짝꿍처럼 사용하면 좋음
+      delay: 2,
+
+      // repeat: 1,
+      repeat: -1, // css -> infinite
+      yoyo: true, // css ->  from -> to -> from으로 반복되는 애니메이션 alternate
+
+
+      // https://gsap.com/resources/getting-started/Easing
+      ease: "bounce.out",
+    })
+
+    gsap.to('.yellow', { rotation: 360, repeat: -1, ease: 'none' })
+
+
+    // 버튼을 클릭했을 때 애니메이션이 되게끔
+    btnGo.addEventListener('click', () => {
+      gsap.fromTo(blueBox, {
+        x: 0,
+        rotation: 0,
+        autoAlpha: 0,
+      },
+        {
+          x: 300,
+          rotation: 360,
+          duration: 2,
+          autoAlpha: 1,
+
+          repeat: -1,
+          yoyo: true,
+
+          ease: "elastic.inOut",
+        })
+    })
+
+
+
+  </script>
+</body>
+
+</html>
