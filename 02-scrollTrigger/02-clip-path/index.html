@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>clip-path</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollTrigger.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    img {
+      vertical-align: top;
+      width: 100%;
+    }
+
+    .wrap {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .wrap figure {
+      height: 50vh;
+    }
+
+    .wrap figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 20%;
+    }
+
+    /* 1. css animation */
+    .wrap1 figure {
+      clip-path: circle(0% at 50% 50%);
+      animation: circleAni 1s 1s both ease-in-out;
+    }
+
+    @keyframes circleAni {
+      to {
+        clip-path: circle(100% at 50% 50%);
+      }
+    }
+
+    /* 2. gsap */
+    .wrap2 figure {
+      /* clip-path: inset(0 50% 0 50%); */
+      clip-path: inset(0 0 0 0);
+    }
+
+    .spacer {
+      height: 100vh;
+      background: #f5f5f5;
+    }
+
+    .wrap3 {
+      background: #f5f5f5;
+    }
+
+    .wrap3 figure {
+      --clip: 0 round 20px;
+      /* clip-path: inset(0 0 0 0); */
+      clip-path: inset(var(--clip));
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+      gsap.registerPlugin(ScrollTrigger)
+      gsap.from('.wrap2 figure', {
+        clipPath: 'inset(0 50%)',
+        duration: 2,
+        ease: 'power4.inOut',
+        delay: 1.5
+      })
+
+      gsap.to('.wrap3 figure', {
+        // clipPath: 'inset(0 50%)',
+        '--clip': '20% round 20px',
+        duration: 2,
+
+        ease: 'power4.inOut',
+        delay: 1.5,
+        scrollTrigger: {
+          trigger: '.wrap3 figure',
+          markers: true,
+          start: "top 90%",
+          end: "bottom 10%",
+          scrub: 1,
+          // toggleActions: 'play none reverse none'
+        }
+      })
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrap wrap1">
+    <figure>
+      <img src="https://kpopanswers.com/wp-content/uploads/2023/04/how-old-are-the-blackpink-members.jpg" alt="" />
+    </figure>
+  </div>
+
+  <div class="wrap wrap2">
+    <figure><img src="https://www.nme.com/wp-content/uploads/2023/07/newjeans-get-up-review.jpg" alt="" /></figure>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="wrap wrap3">
+    <figure><img src="https://www.nme.com/wp-content/uploads/2023/07/newjeans-get-up-review.jpg" alt="" /></figure>
+  </div>
+
+  <div class="spacer"></div>
+
+</body>
+
+</html>
