@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GSAP Horizontal Scroll with Markers</title>
+  <style>
+    body {
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    .your-horizontal-section {
+      display: flex;
+      width: 200%;
+      /* 섹션의 너비를 가로로 스크롤할 만큼 크게 설정 */
+      height: 100vh;
+      /* 전체 높이 */
+    }
+
+    .your-horizontal-section>div {
+      flex: 0 0 50%;
+      /* 각 내부 요소가 가로로 배치되도록 설정 */
+      height: 100%;
+      /* 각 섹션의 전체 높이 */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="your-horizontal-section">
+    <div style="background-color: lightcoral;">Section 1</div>
+    <div style="background-color: lightblue;">Section 2</div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const sections = document.querySelectorAll('.your-horizontal-section > div');
+    const totalWidth = sections.length * 100;
+
+    gsap.to('.your-horizontal-section', {
+      xPercent: -100 * (sections.length - 1),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.your-horizontal-section',
+        pin: true,
+        scrub: 1,
+        markers: {
+          startColor: "green",
+          endColor: "red",
+          indent: 20
+        },
+        end: () => "+=" + document.querySelector('.your-horizontal-section').offsetWidth,
+        onUpdate: (self) => {
+          if (self.isActive) {
+            gsap.set(".gsap-marker-start, .gsap-marker-end", {
+              x: window.pageXOffset,
+              y: window.pageYOffset
+            });
+          }
+        },
+        onRefresh: () => ScrollTrigger.refresh()
+      }
+    });
+  </script>
+</body>
+
+</html>

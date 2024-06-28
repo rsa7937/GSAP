@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  overflow-x: hidden;
+}
+.wrap {
+  display: flex;
+  height: 100vh;
+  /* 100vw 4개의 섹션 - 전체의 가로 크기 정의해주기 */
+  /* 늘어난 길이만큼 늘려주기 꼭 100vw * n 이 아니어도 됨 */
+  width: 400vw;
+}
+
+.wrap section {
+  width: 100vw;
+  height: 100%;
+}
+.wrap section.section1 {
+  background: skyblue;
+}
+.wrap section.section2 {
+  background: yellowgreen;
+}
+.wrap section.section3 {
+  background: tomato;
+}
+.wrap section.section4 {
+  background: pink;
+}
